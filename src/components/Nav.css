@@ -1,0 +1,19 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+nav img {
+    width: 214px;
+}
+nav ul {
+    display: flex;
+}
+nav li {
+    margin-left: 1.5rem;
+}
+nav a {
+    font-weight: bold;
+    font-size: 20px;
+    color: #495e57;
+}

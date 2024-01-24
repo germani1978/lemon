@@ -1,0 +1,45 @@
+.chicago {
+    padding: 8rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+.chicago .texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding-left: 5%;
+}
+.chicago h1 {
+    font-size: 64px;
+    font-family: 'Markazi Text';
+    color: #f4ce14;
+}
+.chicago h2 {
+    font-size: 40px;
+    font-family: 'Markazi Text';
+}
+.chicago p {
+    width: 60%;
+}
+.chicago .fotoschicago {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.chicago img {
+    position: absolute;
+    height: 100%;
+    width: 45%;
+    object-fit: cover;
+}
+.chicago .foto1 {
+    top: 0;
+    right: 10%;
+}
+.chicago .foto2 {
+    bottom: -30%;
+    left: 20%;
+}
