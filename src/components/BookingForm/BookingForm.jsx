@@ -2,13 +2,58 @@ import React, { useState } from 'react'
 import './BookingForm.css'
 import Error from '../Error/Error'
 
+const FieldForm = ({
+    field,
+    label,
+    data,
+    error,
+    handleChange,
+    type = 'text',
+    options = [],
+    ...props
+}) => {
+    return (
+        <>
+            <div className="label-container">
+                <label htmlFor={field}>{label}</label>
+                {error[field] && <Error />}
+            </div>
+            {type !== 'select' ? (
+                <input
+                    placeholder={label}
+                    type={type}
+                    id={field}
+                    value={data[field]}
+                    onChange={e => handleChange(field, e.target.value)}
+                    required
+                    {...props}
+                />
+            ) : (
+                <select
+                    id={field}
+                    value={data[field]}
+                    onChange={e => handleChange(field, e.target.value)}
+                    disabled={options.length === 0}
+                    required
+                >
+                    {options.map((option, index) => (
+                        <option value={option} key={index}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
+            )}
+        </>
+    )
+}
+
 const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
     const [data, setData] = useState({
         name: '',
         lastname: '',
         email: '',
         date: '',
-        availableTimes: '',
+        time: '',
         amount: 1,
         occasion: 'casual'
     })
@@ -18,7 +63,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
         lastname: false,
         email: false,
         date: false,
-        availableTimes: false,
+        time: false,
         amount: false,
         occasion: false
     })
@@ -29,7 +74,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
             lastname: /^[a-zA-Z\s]+$/,
             email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             date: /^\d{4}-\d{2}-\d{2}$/,
-            availableTimes: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
+            time: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
             amount: /^[1-9]\d?(\.\d{1,2})?$/,
             occasion: /(casual|birthday|anniversary)/
         }
@@ -70,112 +115,70 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
     }
 
     return (
-        <div className="container form-container">
-            <form className="column" onSubmit={handleSubmit}>
+        <div className="form-container">
+            <form onSubmit={handleSubmit}>
                 <h1>Book Now</h1>
-                <div className="label-container">
-                    <label htmlFor="first">First Name</label>
-                    {error.name && <Error />}
-                </div>
-                <input
-                    type="text"
-                    id="first"
-                    placeholder="name"
-                    value={data.name}
-                    onChange={e => handleChange('name', e.target.value)}
-                    required
+                <FieldForm
+                    field="name"
+                    label="First name"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
                 />
-
-                {/* lastname */}
-                <div className="label-container">
-                    <label htmlFor="last">Last Name</label>
-                    {error.lastname && <Error />}
-                </div>
-                <input
-                    type="text"
-                    id="last"
-                    placeholder="last name"
-                    value={data.lastname}
-                    onChange={e => handleChange('lastname', e.target.value)}
-                    required
+                <FieldForm
+                    field="lastname"
+                    label="Last name"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
                 />
-
-                {/* email */}
-                <div className="label-container">
-                    <label htmlFor="email">Email</label>
-                    {error.email && <Error />}
-                </div>
-                <input
+                <FieldForm
+                    field="email"
+                    label="Email"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
                     type="email"
-                    id="email"
-                    placeholder="email"
-                    value={data.email}
-                    onChange={e => handleChange('email', e.target.value)}
-                    required
                 />
-
-                {/* date */}
-                <div className="label-container">
-                    <label htmlFor="date">Date</label>
-                    {error.date && <Error />}
-                </div>
-                <input
+                <FieldForm
+                    field="date"
+                    label="Date"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
                     type="date"
-                    id="date"
-                    placeholder="date"
-                    value={data.date}
-                    onChange={e => handleChange('date', e.target.value)}
-                    required
                 />
 
-                {/* time */}
-                <div className="label-container">
-                    <label htmlFor="availableTimes">Time</label>
-                    {error.availableTimes && <Error />}
-                </div>
-                <select
-                    value={data.availableTimes}
-                    disabled={availableTimes.length === 0} // after select the date make request to server
-                    onChange={e =>
-                        handleChange('availableTimes', e.target.value)
-                    }
-                    required
-                >
-                    {availableTimes.map((time, index) => (
-                        <option value={time} key={index}>
-                            {time}
-                        </option>
-                    ))}
-                </select>
+                <FieldForm
+                    field="time"
+                    label="Time"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
+                    type="select"
+                    options={availableTimes}
+                />
 
-                {/* amount */}
-                <div className="label-container">
-                    <label htmlFor="amount">Amount</label>
-                    {error.amount && <Error />}
-                </div>
-                <input
+                <FieldForm
+                    field="amount"
+                    label="Amount"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
                     type="number"
-                    id="amount"
-                    value={data.amount}
-                    onChange={e => handleChange('amount', e.target.value)}
-                    required
                     min={1}
                     max={10}
                 />
 
-                {/* ocasion */}
-                <div className="label-container">
-                    <label htmlFor="amount">Occasion</label>
-                    {error.occasion && <Error />}
-                </div>
-                <select
-                    value={data.occasion}
-                    onChange={e => handleChange('occasion', e.target.value)}
-                >
-                    <option value="casual">Casual</option>
-                    <option value="birthday">Birthday</option>
-                    <option value="anniversary">Anniversary</option>
-                </select>
+                <FieldForm
+                    field="occasion"
+                    label="Occasion"
+                    data={data}
+                    error={error}
+                    handleChange={handleChange}
+                    type="select"
+                    options={['casual', 'birthday', 'anniversary']}
+                />
 
                 <div className="container-button">
                     <button
