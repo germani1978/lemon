@@ -1,10 +1,9 @@
 import React from 'react'
-import Button from './Button'
-import Card from './Card'
+import Card from '../Card/Card'
 import './Specials.css'
-import foto1 from '../img/greek salad.jpg'
-import foto2 from '../img/bruchetta.jpg'
-import foto3 from '../img/lemon dessert.jpg'
+import foto1 from '../../img/greek salad_11zon.webp'
+import foto2 from '../../img/bruchetta_11zon.webp'
+import foto3 from '../../img/lemon dessert_11zon.webp'
 
 // the component that loops over the specials that come from a data source
 
@@ -28,15 +27,15 @@ const data = [
 
 function Specials() {
     return (
-        <div className="special container">
-            <div className="specials-title row">
+        <div id="specials">
+            <div id="title">
                 <h2>This Weeks specials</h2>
-                <Button text="Online Menu" />
+                <button aria-label="click online menu">Online Menu</button>
             </div>
             <div className="cards">
-                <Card img={foto1} title={data[0].title} text={data[0].text} price={data[0].price} />
-                <Card img={foto2} title={data[1].title} text={data[1].text} price={data[1].price} />
-                <Card img={foto3} title={data[2].title} text={data[2].text} price={data[2].price} />
+                <Card className="card" data={data[0]} foto={foto1} />
+                <Card className="card" data={data[1]} foto={foto2} />
+                <Card className="card" data={data[2]} foto={foto3} />
             </div>
         </div>
     )

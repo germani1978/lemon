@@ -1,0 +1,31 @@
+.carduser {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    background-color: white;
+    padding: 2rem 1rem;
+    width: 100%;
+    border-radius: 8px;
+}
+.carduser #start {
+    width: 50%;
+    margin: auto;
+}
+.profile img {
+    height: 70%;
+}
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.carduser h4 {
+    font-size: 16px;
+}
+.carduser p {
+    font-size: 14px;
+    text-align: center;
+}

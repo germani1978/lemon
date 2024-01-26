@@ -1,14 +1,32 @@
-import React from 'react'
-import logo from '../icon/Logo .svg'
+import React, { useState } from 'react'
 import './Nav.css'
+import logo from '../../icon/Logo .svg'
+import menuIcon from '../../icon/menu.svg'
 
 // navigation of the website
 
 function Nav() {
+    // change the view between mobile or desk
+    const [mobile, setMobile] = useState(false)
+
+    const toggleView = () => {
+        setMobile(!mobile)
+    }
+
     return (
-        <nav className="container">
-            <img src={logo} alt="" />
-            <ul>
+        <nav>
+            <a href="/">
+                <img src={logo} alt="logo" />
+            </a>
+
+            <img
+                className="menu-icon"
+                src={menuIcon}
+                alt=""
+                onClick={toggleView}
+            />
+
+            <ul className={`${mobile ? 'visible' : ''}`}>
                 <li>
                     <a href="/">Home</a>
                 </li>

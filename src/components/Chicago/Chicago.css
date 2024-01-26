@@ -1,0 +1,44 @@
+.chicago {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 10% 10%;
+    position: relative;
+}
+.chicago h1 {
+    font-size: 64px;
+    font-family: 'Markazi Text', sans-serif;
+    color: #f4ce14;
+}
+.chicago h2 {
+    font-size: 40px;
+    font-family: 'Markazi Text', sans-serif;
+}
+.chicago p {
+    width: 40%;
+    font-size: 20;
+}
+.chicago img {
+    position: absolute;
+    width: 20%;
+    height: 60%;
+}
+.chicago #foto1 {
+    top: 5%;
+    right: 10%;
+}
+.chicago #foto2 {
+    right: 20%;
+    bottom: 10%;
+}
+@media (max-width: 700px) {
+    .chicago p {
+        width: 100%;
+    }
+    .chicago img {
+        position: static;
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+}
