@@ -88,7 +88,6 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
 
     const handleChange = (field, value) => {
         //save data
-        console.log(`Field: ${field}, Value: ${value}`)
         setFormData(prev => ({
             ...prev,
             [field]: {
