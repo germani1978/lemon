@@ -31,16 +31,16 @@ function Nav() {
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/">About</a>
+                    <a href="#chicago">About</a>
                 </li>
                 <li>
-                    <a href="/">Menu</a>
+                    <a href="#specials">Menu</a>
                 </li>
                 <li>
-                    <a href="/">Reservations</a>
+                    <a href="/booking">Reservations</a>
                 </li>
                 <li>
-                    <a href="/">Order Online</a>
+                    <a href="#header">Order Online</a>
                 </li>
                 <li>
                     <a href="/">Login</a>

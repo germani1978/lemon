@@ -12,7 +12,7 @@ function Header() {
         navigate('/booking')
     }
     return (
-        <header>
+        <header id="header">
             <h1>Little Lemon</h1>
             <h2>Chicago</h2>
             <p>
