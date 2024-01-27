@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './BookingForm.css'
 import Error from '../Error/Error'
 
 const FieldForm = ({
     field,
     label,
-    data,
-    error,
+    formData,
     handleChange,
     type = 'text',
     options = [],
     ...props
 }) => {
+    const { value, error } = formData[field]
     return (
         <>
             <div className="label-container">
                 <label htmlFor={field}>{label}</label>
-                {error[field] && <Error />}
+                {error && <Error />}
             </div>
             {type !== 'select' ? (
                 <input
                     placeholder={label}
                     type={type}
                     id={field}
-                    value={data[field]}
+                    value={value}
                     onChange={e => handleChange(field, e.target.value)}
                     required
                     {...props}
@@ -31,16 +31,17 @@ const FieldForm = ({
             ) : (
                 <select
                     id={field}
-                    value={data[field]}
+                    value={value}
                     onChange={e => handleChange(field, e.target.value)}
                     disabled={options.length === 0}
                     required
                 >
-                    {options.map((option, index) => (
-                        <option value={option} key={index}>
-                            {option}
-                        </option>
-                    ))}
+                    {options.length !== 0 &&
+                        options.map((option, index) => (
+                            <option value={option} key={index}>
+                                {option}
+                            </option>
+                        ))}
                 </select>
             )}
         </>
@@ -48,25 +49,28 @@ const FieldForm = ({
 }
 
 const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
-    const [data, setData] = useState({
-        name: '',
-        lastname: '',
-        email: '',
-        date: '',
-        time: '',
-        amount: 1,
-        occasion: 'casual'
+    const [formData, setFormData] = useState({
+        name: { value: '', error: false },
+        lastname: { value: '', error: false },
+        email: { value: '', error: false },
+        date: { value: '', error: false },
+        time: { value: '', error: false },
+        amount: { value: 1, error: false },
+        occasion: { value: 'casual', error: false }
     })
 
-    const [error, setError] = useState({
-        name: false,
-        lastname: false,
-        email: false,
-        date: false,
-        time: false,
-        amount: false,
-        occasion: false
-    })
+    const [formOk, setFormOk] = useState(false)
+
+    useEffect(() => {
+        // check is form us full of good information
+        const isNewFormOK = Object.values(formData).every(
+            fieldData => fieldData.error === false && fieldData.value !== ''
+        )
+        setFormOk(isNewFormOK)
+
+        if (!formData.date.error && formData.date.value !== '')
+            dispatch(formData.date)
+    }, [formData, dispatch])
 
     const isValid = (type, input) => {
         const validationPatterns = {
@@ -79,39 +83,26 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
             occasion: /(casual|birthday|anniversary)/
         }
 
-        return validationPatterns[type] && validationPatterns[type].test(input)
+        return validationPatterns[type].test(input)
     }
 
     const handleChange = (field, value) => {
         //save data
-        setData(prevData => ({ ...prevData, [field]: value }))
-
-        //reset error
-        setError(prev => ({ ...prev, [field]: false }))
-
-        //check if error exist
-        if (!isValid(field, value))
-            setError(prev => ({ ...prev, [field]: true }))
-
-        //after select date make a request to server to schedule
-        if (field === 'date') {
-            dispatch(value)
-        }
+        console.log(`Field: ${field}, Value: ${value}`)
+        setFormData(prev => ({
+            ...prev,
+            [field]: {
+                value,
+                error: !isValid(field, value)
+            }
+        }))
     }
 
     const handleSubmit = e => {
         e.preventDefault()
-        if (!Object.values(error).some(Boolean)) {
+        if (!Object.values(formData).some(fieldData => fieldData.error)) {
             submitForm(e) //if not error send
         }
-    }
-
-    function notOkForm() {
-        //check if not error and not empty field
-        return (
-            Object.values(error).some(Boolean) ||
-            Object.values(data).some(value => value === '')
-        )
     }
 
     return (
@@ -121,30 +112,26 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
                 <FieldForm
                     field="name"
                     label="First name"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                 />
                 <FieldForm
                     field="lastname"
                     label="Last name"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                 />
                 <FieldForm
                     field="email"
                     label="Email"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                     type="email"
                 />
                 <FieldForm
                     field="date"
                     label="Date"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                     type="date"
                 />
@@ -152,8 +139,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
                 <FieldForm
                     field="time"
                     label="Time"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                     type="select"
                     options={availableTimes}
@@ -162,8 +148,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
                 <FieldForm
                     field="amount"
                     label="Amount"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                     type="number"
                     min={1}
@@ -173,8 +158,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
                 <FieldForm
                     field="occasion"
                     label="Occasion"
-                    data={data}
-                    error={error}
+                    formData={formData}
                     handleChange={handleChange}
                     type="select"
                     options={['casual', 'birthday', 'anniversary']}
@@ -183,7 +167,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
                 <div className="container-button">
                     <button
                         type="submit"
-                        disabled={notOkForm()}
+                        disabled={!formOk}
                         aria-label="click send"
                     >
                         Sent

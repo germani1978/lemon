@@ -1,6 +1,6 @@
 import React from 'react'
-import foto1 from '../../img/Mario and Adrian A_11zon.webp'
-import foto2 from '../../img/Mario and Adrian b_11zon.webp'
+import foto1 from '../../assets/img/Mario and Adrian A_11zon.webp'
+import foto2 from '../../assets/img/Mario and Adrian b_11zon.webp'
 import './Chicago.css'
 
 // (the component that describes the Little Lemon Chicago restaurant and gives a short backstory for it)

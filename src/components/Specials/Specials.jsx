@@ -1,9 +1,9 @@
 import React from 'react'
 import Card from '../Card/Card'
 import './Specials.css'
-import foto1 from '../../img/greek salad_11zon.webp'
-import foto2 from '../../img/bruchetta_11zon.webp'
-import foto3 from '../../img/lemon dessert_11zon.webp'
+import foto1 from '../../assets/img/greek salad_11zon.webp'
+import foto2 from '../../assets/img/bruchetta_11zon.webp'
+import foto3 from '../../assets/img/lemon dessert_11zon.webp'
 
 // the component that loops over the specials that come from a data source
 

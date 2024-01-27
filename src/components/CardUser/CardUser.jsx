@@ -1,6 +1,6 @@
 import React from 'react'
-import foto from '../../icon/men1.svg'
-import start from '../../icon/start.svg'
+import foto from '../../assets/icon/men1.svg'
+import start from '../../assets/icon/start.svg'
 import './CardUser.css'
 
 function CardUser() {

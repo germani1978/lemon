@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Nav.css'
-import logo from '../../icon/Logo .svg'
-import menuIcon from '../../icon/menu.svg'
+import logo from '../../assets/icon/Logo .svg'
+import menuIcon from '../../assets/icon/menu.svg'
 
 // navigation of the website
 

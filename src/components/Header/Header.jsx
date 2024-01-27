@@ -1,5 +1,5 @@
 import React from 'react'
-import foto from '../../img/restauranfood_11zon.webp'
+import foto from '../../assets/img/restauranfood_11zon.webp'
 import './Header.css'
 import { useNavigate } from 'react-router-dom'
 
